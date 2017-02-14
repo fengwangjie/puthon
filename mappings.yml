@@ -1,0 +1,46 @@
+academic_term:
+      keurp:
+        - acdemic_term
+
+students:
+    kedurp:
+      - auth_user
+      - core_student
+      - core_grade
+      - core_class
+      - core_class_student
+      - core_teacher
+    roomis:
+      - auth_user
+      - core_card
+
+teachers:
+    kedurp:
+      - auth_user
+      - core_teacher
+    roomis:
+      - auth_user
+      - core_card
+
+required_course:
+    kedurp:
+      - core_class #N
+      - core_grade #N
+      - core_room
+      - core_course
+      - core_slots
+      - core_course_class #N
+      - core_course_teacher
+      - timetable
+      - timetable_items
+
+      -core_subject
+
+elective_course:
+    kedurp:
+      - core_room
+      - core_course
+      - core_slots
+      - core_course_teacher
+      - timetable
+      - timetable_items

@@ -1,0 +1,63 @@
+[
+  {
+    "class_name": "计算机1班",
+    "student_no": "jg150124",
+    "student_name": "王德鑫",
+    "course_type": "OPTIONAL",
+    "course": "C语言",
+    "week": 2,
+    "day_of_week": 1,
+    "slot": 2,
+    "start_time": "09:25:00",
+    "end_time": "10:10:00",
+    "teacher_no": "qhfzjt201608f0046",
+    "teacher_name": "孟凡艳",
+    "class_room": "C307"
+  },
+  {
+    "class_name": "计算机1班",
+    "student_no": "jg150123",
+    "student_name": "孙冕桐",
+    "course_type": "OPTIONAL",
+    "course": "C语言",
+    "week": 2,
+    "day_of_week": 1,
+    "slot": 2,
+    "start_time": "09:25:00",
+    "end_time": "10:10:00",
+    "teacher_no": "qhfzjt201608f0046",
+    "teacher_name": "孟凡艳",
+    "class_room": "C307"
+  },
+
+  {
+    "class_name": "计算机2班",
+    "student_no": "jg150116",
+    "student_name": "梁珈琦",
+    "course_type": "OPTIONAL",
+    "course": "Java编程基础",
+    "week": 3,
+    "day_of_week": 2,
+    "slot": 2,
+    "start_time": "09:25:00",
+    "end_time": "10:10:00",
+    "teacher_no": "qhfzjt201608f0059",
+    "teacher_name": "罗莎",
+    "class_room": "C308"
+  },
+  {
+    "class_name": "计算机2班",
+    "student_no": "jg150120",
+    "student_name": "马苗苗",
+    "course_type": "OPTIONAL",
+    "course": "Java编程基础",
+    "day_of_week": 2,
+    "week": 3,
+    "slot": 2,
+    "start_time": "09:25:00",
+    "end_time": "10:10:00",
+    "teacher_no": "qhfzjt201608f0059",
+    "teacher_name": "罗莎",
+    "class_room": "C308"
+  }
+]
