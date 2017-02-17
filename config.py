@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 kedurp = {
-    "school_id": 1,
-    "school_code": "01",
+    "school_id": 2,
+    "school_code": "002",
 }
 
 roomis = {
-    "org_id": 1,
-    "org_code": "01",
+    "org_id": 2,
+    "org_code": "002",
 }

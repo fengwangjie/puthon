@@ -28,7 +28,7 @@ class KedurpStudentTask(luigi.Task):
         mapping['student_no'] = 'student_no'
         mapping['gender'] = lambda x: 'MALE' if x['gender'] else 'FEMALE'
         mapping['status'] = lambda x: 'INACTIVE' if x['deleted'] else 'ACTIVE'
-        mapping['created_at'] = lambda x: datetime2.utc()
+        # mapping['created_at'] = lambda x: datetime2.utc()
 
         dst_table = etl.fieldmap(src_table, mapping)
 
@@ -96,7 +96,7 @@ class KedurpGradeTask(luigi.Task):
         mapping['code'] = 'grade_name'
         mapping['name'] = 'grade_name'
         mapping['status'] = lambda x: 'ACTIVE'
-        mapping['created_at'] = lambda x: datetime2.utc()
+        # mapping['created_at'] = lambda x: datetime2.utc()
 
         dst_table = etl.fieldmap(src_table, mapping)
 

@@ -59,7 +59,7 @@ class DbVersion(Model):
 
     @classmethod
     def touch(cls, updated_at=datetime.now()):
-        cls.update(version=cls.version+1, updated_at=updated_at).execute()
+        cls.update(version=cls.version + 1, updated_at=updated_at).execute()
         return cls.get()
 
 

@@ -8,12 +8,11 @@ from peewee import MySQLDatabase
 import petl as etl
 from staging.models import AcademicTerm, DbVersion, db_proxy
 
-db_proxy.initialize(MySQLDatabase("staging", host="127.0.0.1", user="root"))
+db_proxy.initialize(MySQLDatabase("staging", host="127.0.0.1", user="root", password='root'))
 db_proxy.connect()
 
 
 class TestDbVersion(unittest.TestCase):
-
     def setUp(self):
         DbVersion.create(version=0, updated_at=datetime.datetime.now())
 
@@ -27,7 +26,6 @@ class TestDbVersion(unittest.TestCase):
 
 
 class TestAcademicTerm(unittest.TestCase):
-
     def setUp(self):
         AcademicTerm.create(academic_year='2016', academic_term='2',
                             start_date=datetime.date(2016, 7, 1), end_date=datetime.date(2016, 12, 30),
@@ -118,7 +116,7 @@ class TestAcademicTerm(unittest.TestCase):
 
         updated_at = datetime.datetime.now()
         AcademicTerm.upsert(
-            dst, ('academic_year', 'academic_term'),  2, updated_at)
+            dst, ('academic_year', 'academic_term'), 2, updated_at)
 
         at = AcademicTerm.get(AcademicTerm.academic_year == '2016',
                               AcademicTerm.academic_term == '2')

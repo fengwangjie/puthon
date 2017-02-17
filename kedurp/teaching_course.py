@@ -29,7 +29,7 @@ class KedurpTeachingClassRoomTask(luigi.Task):
         mapping['school_id'] = lambda x: config.kedurp['school_id']
         mapping['name'] = 'class_room'
         mapping['status'] = lambda x: 'INACTIVE' if x['deleted'] else 'ACTIVE'
-        mapping['updated_at'] = lambda x: datetime2.utc()
+        # mapping['updated_at'] = lambda x: datetime2.utc()
 
         dst_table = etl.fieldmap(src_table, mapping)
         conn = self.output().connect()
@@ -69,7 +69,13 @@ class KedurpTeachingClassTask(luigi.Task):
                                 etl.fromdb(conn, "select id as room_id, name as room_name from core_room"),
                                 lkey="class_room", rkey="room_name")
 
-        src_table = etl.join(course_table, teacher_table, key="teacher_no")
+        grade_name_table = etl.leftjoin(course_table,
+                                        staging.students(),
+                                        key='student_no')
+        grade_id_table = etl.leftjoin(grade_name_table, etl.fromdb(conn,
+                                                                   'select DISTINCT id as grade_id,name as grade_name from core_grade WHERE  school_id={}'.format(
+                                                                       config.kedurp['school_id'])), key='grade_name')
+        src_table = etl.join(grade_id_table, teacher_table, key="teacher_no")
 
         mapping = OrderedDict()
         mapping['school_id'] = lambda x: config.kedurp['school_id']
@@ -80,7 +86,7 @@ class KedurpTeachingClassTask(luigi.Task):
         mapping['academic_term_id'] = lambda x: academic.academic_id
         mapping['klass_type'] = lambda x: 'TEACHING'
         mapping['room_id'] = 'room_id'
-
+        mapping['grade_id'] = 'grade_id'
         mapping['status'] = lambda x: 'INACTIVE' if x['deleted'] else 'ACTIVE'
         mapping['updated_at'] = lambda x: datetime2.utc()
 
@@ -132,7 +138,7 @@ class KedurpTeachingClassStudentTask(luigi.Task):
         mapping['class_id'] = 'class_id'
         mapping['student_id'] = 'student_id'
         mapping['updated_at'] = lambda x: datetime2.utc()
-
+        # mapping['grade_id'] = 'grade_id'
         dst_table = etl.fieldmap(src_table, mapping)
 
         conn.cursor().execute("SET SQL_MODE=ANSI_QUOTES")
@@ -192,7 +198,7 @@ class KedurpTeachingCourseTask(luigi.Task):
 
         mapping['academic_term_id'] = lambda x: academic.academic_id
         mapping['room_id'] = 'room_id'
-        mapping['updated_at'] = lambda x: datetime2.utc()
+        # mapping['updated_at'] = lambda x: datetime2.utc()
 
         dst_table = etl.fieldmap(src_table, mapping)
         conn.cursor().execute("SET SQL_MODE=ANSI_QUOTES")
@@ -246,8 +252,8 @@ class KedurpTeachingCourseTeacherTask(luigi.Task):
         mapping['school_id'] = lambda x: config.kedurp['school_id']
         mapping['teacher_id'] = 'teacher_id'
         mapping['course_id'] = 'course_id'
-        mapping['updated_at'] = lambda x: datetime2.utc()
-        mapping['created_at'] = lambda x: datetime2.utc()
+        # mapping['updated_at'] = lambda x: datetime2.utc()
+        # mapping['created_at'] = lambda x: datetime2.utc()
 
         dst_table = etl.fieldmap(src_table, mapping)
         conn = self.output().connect()
@@ -289,7 +295,7 @@ class KedurpTeachingTimeTableItemTask(luigi.Task):
 
         course_table = etl.fromdb(conn,
                                   '''select cc.id as course_id, cc.class_id as class_id,cc.room_id as room_id,
-                                                    cc.name as course, ct.id as teacher_id,
+                                                    cc.name as course, ct.teacher_id as teacher_id,
                                                     tt.id as timetable_id, tt.week as week,
                                                     c.name as class_name
                                        from core_course cc
@@ -303,7 +309,6 @@ class KedurpTeachingTimeTableItemTask(luigi.Task):
                                        and cc.academic_term_id={}'''.format(academic.academic_id))
 
         course_table = etl.join(teaching_course_table, course_table, key=['class_name', 'course', 'week'])
-
         mapping = OrderedDict()
         mapping['school_id'] = lambda x: config.kedurp['school_id']
         mapping['timetable_id'] = 'timetable_id'
@@ -316,10 +321,10 @@ class KedurpTeachingTimeTableItemTask(luigi.Task):
 
         mapping['end_slot'] = 'slot'
         mapping['date'] = lambda x: kedurp.date_in(academic.start_date, academic.end_date, x['week'],
-                                                                     x['day_of_week'])
+                                                   x['day_of_week'])
         mapping['slot_id'] = lambda x: 1
 
-        mapping['updated_at'] = lambda x: datetime2.utc()
+        # mapping['updated_at'] = lambda x: datetime2.utc()
 
         dst_table = etl.fieldmap(course_table, mapping)
 

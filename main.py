@@ -10,11 +10,13 @@ class MainTask(luigi.WrapperTask):
 
     def requires(self):
         yield kedurp.KedurpTask(self.interval)
-        # yield roomis.RoomisTask(self.interval)
+        yield roomis.RoomisTask(self.interval)
 
 
 def main():
-    luigi.run(['MainTask', '--interval', datetime.now().strftime('%Y-%m-%dT%H%M'), '--workers', '1'])
+    luigi.run(['MainTask', '--interval', datetime.now().strftime('%Y-%m-%dT%H%M'), '--workers', '1'],
+              local_scheduler=True)
+
 
 if __name__ == '__main__':
     main()

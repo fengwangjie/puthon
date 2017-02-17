@@ -120,7 +120,7 @@ class KedurpAdminClassTask(luigi.Task):
         mapping['room_id'] = 'room_id'
 
         mapping['status'] = lambda x: 'INACTIVE' if x['deleted'] else 'ACTIVE'
-        mapping['updated_at'] = lambda x: datetime2.utc()
+        # mapping['updated_at'] = lambda x: datetime2.utc()
 
         dst_table = etl.fieldmap(src_table, mapping)
 
@@ -170,7 +170,7 @@ class KedurpAdminClassStudentTask(luigi.Task):
         mapping['school_id'] = lambda x: config.kedurp['school_id']
         mapping['class_id'] = 'class_id'
         mapping['student_id'] = 'student_id'
-        mapping['updated_at'] = lambda x: datetime2.utc()
+        # mapping['updated_at'] = lambda x: datetime2.utc()
 
         dst_table = etl.fieldmap(src_table, mapping)
 
@@ -233,7 +233,7 @@ class KedurpAdminCourseTask(luigi.Task):
 
         mapping['academic_term_id'] = lambda x: academic.academic_id
         mapping['room_id'] = 'room_id'
-        mapping['updated_at'] = lambda x: datetime2.utc()
+        # mapping['updated_at'] = lambda x: datetime2.utc()
 
         dst_table = etl.fieldmap(src_table, mapping)
         conn.cursor().execute("SET SQL_MODE=ANSI_QUOTES")
@@ -289,8 +289,8 @@ class KedurpAdminCourseTeacherTask(luigi.Task):
         mapping['school_id'] = lambda x: config.kedurp['school_id']
         mapping['teacher_id'] = 'teacher_id'
         mapping['course_id'] = 'course_id'
-        mapping['updated_at'] = lambda x: datetime2.utc()
-        mapping['created_at'] = lambda x: datetime2.utc()
+        # mapping['updated_at'] = lambda x: datetime2.utc()
+        # mapping['created_at'] = lambda x: datetime2.utc()
 
         dst_table = etl.fieldmap(src_table, mapping)
         conn = self.output().connect()
@@ -329,7 +329,7 @@ class KedurpTimeTableTask(luigi.Task):
         mapping['academic_term_id'] = lambda x: academic.academic_id
         mapping['week'] = 'week'
         mapping['checksum'] = lambda x: 'checksum'
-        mapping['updated_at'] = lambda x: datetime2.utc()
+        # mapping['updated_at'] = lambda x: datetime2.utc()
 
         dst_table = etl.fieldmap(src_table, mapping)
         conn.cursor().execute("SET SQL_MODE=ANSI_QUOTES")
@@ -400,8 +400,8 @@ class KedurpAdminTimeTableItemTask(luigi.Task):
                                                                      x['day_of_week'])
         mapping['slot_id'] = lambda x: 1
 
-        mapping['updated_at'] = lambda x: datetime2.utc()
-        mapping['created_at'] = lambda x: datetime2.utc()
+        # mapping['updated_at'] = lambda x: datetime2.utc()
+        # mapping['created_at'] = lambda x: datetime2.utc()
         dst_table = etl.fieldmap(src_table, mapping)
         conn.cursor().execute("SET SQL_MODE=ANSI_QUOTES")
 

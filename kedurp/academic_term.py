@@ -29,7 +29,7 @@ class KedurpAcademicTask(luigi.Task):
         mapping['start_date'] = 'start_date'
         mapping['end_date'] = 'end_date'
         mapping['status'] = lambda x: 'INACTIVE' if x['deleted'] else 'ACTIVE'
-        mapping['updated_at'] = lambda x: datetime2.utc()
+        # mapping['updated_at'] = lambda x: datetime2.utc()
 
         dst_table = etl.fieldmap(src_table, mapping)
 

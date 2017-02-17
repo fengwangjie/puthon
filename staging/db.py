@@ -2,13 +2,13 @@ import petl as etl
 import pymysql
 
 db = {
-    "version": 0,
+    "version": 1,
     "conn": {
         "host": "127.0.0.1",
         "port": 3306,
-        "database": "staging",
+        "database": "seiue_staging",
         "user": "root",
-        "password": "",
+        "password": "root",
         "charset": "utf8"
     }
 }
@@ -41,7 +41,7 @@ def teaching_courses():
 
 def timetables():
     return etl.fromdb(pymysql.connect(**db['conn']),
-               '''SELECT `week` FROM
-                  (SELECT ac.week, ac.version FROM admin_course ac
-                  UNION SELECT tc.week, tc.version FROM teaching_course tc) AS c
-                  WHERE c.version = {}'''.format(db["version"]))
+                      '''SELECT `week` FROM
+                         (SELECT ac.week, ac.version FROM admin_course ac
+                         UNION SELECT tc.week, tc.version FROM teaching_course tc) AS c
+                         WHERE c.version = {}'''.format(db["version"]))
