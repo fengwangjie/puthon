@@ -264,6 +264,7 @@ class KedurpTeachingCourseTeacherTask(luigi.Task):
     def output(self):
         return pymysqldb.MySqlTarget(self.host, self.database, self.user, self.password, self.table, self.task_id)
 
+
 # TODO  add requires 'KedurpSlotTask'
 class KedurpTeachingTimeTableItemTask(luigi.Task):
     interval = luigi.DateMinuteParameter()
